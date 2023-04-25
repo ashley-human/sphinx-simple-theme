@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>{{ title }} | {{ docstitle }}</title>
+  <link rel="stylesheet" href="{{ pathto('_static/' + style, 1) }}" type="text/css" />
+  <link rel="stylesheet" href="{{ pathto('_static/pygments.css', 1) }}" type="text/css" />
+  <script src="{{ pathto('_static/mobile_navigation.js', 1) }}"></script>
+  <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+  <script src="{{ pathto('_static/doctools.js', 1) }}"></script>
+  <script src="{{ pathto('_static/sphinx_highlight.js', 1) }}"></script>
+  <script src="{{ pathto('_static/searchtools.js', 1) }}"></script>
+  <script src="{{ pathto('_static/language_data.js', 1) }}"></script>
+  <script src="searchindex.js" defer></script>
+  {%- if favicon %}
+  <link rel="shortcut icon" href="{{ pathto('_static/' + favicon, 1) }}" />
+  {%- endif %}
+  <link rel="search" title="{{ _('Search') }}" href="{{ pathto('search') }}" />
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+</head>
+
+{%- macro navigation_menu(menu_layout) %}
+{%- for display_text, target in menu_layout.items() %}
+<li>
+  {%- if target is mapping and display_text != "" %}
+  {%- if "" in target %}
+  <a href="{{ target[''] }}">
+    <div class="navigation-element">{{ display_text }}</div>
+  </a>
+  {%- else %}
+  <div>{{ display_text }}</div>
+  {%- endif %}
+  <ul class="navigation-submenu">
+    {{ navigation_menu(target) }}
+  </ul>
+  {%- elif display_text != "" %}
+  <a href="{{ target }}">
+    <div class="navigation-element">{{ display_text }}</div>
+  </a>
+  {%- endif %}
+</li>
+{%- endfor %}
+{%- endmacro %}
+
+<body>
+  <div id="header">
+    <div id="mobile-menu">
+      <div id="mobile-doctitle"><a href="{{ pathto(master_doc) }}">
+          <div>{{ docstitle }}</div>
+        </a>
+      </div>
+      <div id="mobile-navigation-button" onclick="mobileMenuToggle()">&#9776;</div>
+    </div>
+    <div class="side-pane" id="header-logo">
+      <a href="{{ pathto(master_doc) }}" id="header-logo">
+        {%- if logo_url %}
+        <img class="logo" src="{{ logo_url|e }}" alt="Logo" />
+        {%- else %}
+        {{ docstitle }}
+        {%- endif %}
+      </a>
+    </div>
+    <div class="center-pane" id="header-navigation">
+      {%- if theme_navigation_sections %}
+      <ul id="navigation-bar">
+        {%- for display_text, target in theme_navigation_sections.items() %}
+        <li class="navigation-heading">
+          {%- if target is mapping %}
+          {%- if "" in target %}
+          <a href="{{ target[''] }}">
+            <div class="navigation-element">{{ display_text }}</div>
+          </a>
+          {%- else %}
+          <div>{{ display_text }}</div>
+          {%- endif %}
+          <ul class="navigation-dropdown">
+            {{ navigation_menu(target) }}
+          </ul>
+          {%- else %}
+          <a href="{{ target }}">
+            <div class="navigation-element">{{ display_text }}</div>
+          </a>
+          {%- endif %}
+        </li>
+        {%- endfor %}
+      </ul>
+      {%- endif %}
+    </div>
+    <div class="side-pane" id="header-search">
+      <form id="search-box" role="search" action="{{ pathto('search') }}" method="get">
+        <input id="search-text-box" name="q" type="text" placeholder="&#x1F50D;&#xFE0E Search" autocomplete="off"
+          autocorrect="off" autocapitalize="off" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+  <div id="content" role="main">
+    <div class="side-pane">
+      <div class="page-navigation-container">
+        <div class="page-navigation">{{ toc }}</div>
+      </div>
+    </div>
+    <div class="center-pane" id="content-body">
+      {%- block body %}{%- endblock %}
+    </div>
+    <div class="side-pane">
+
+    </div>
+  </div>
+  <div id="footer">
+    <div id="copyright-statement">&#169; {{ copyright }}</div>
+  </div>
+</body>
+
+</html>

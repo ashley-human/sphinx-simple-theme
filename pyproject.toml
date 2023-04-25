@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+
+[project]
+name = "sphinx-simple-theme"
+description = "A simple theme for Sphinx"
+readme = "README.rst"
+license = "MIT"
+keywords = "documentation restructuredtext rst sphinx theme"
+classifiers = [
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Natural Language :: English",
+    "Framework :: Sphinx :: Theme",
+    "Topic :: Documentation",
+    "Topic :: Documentation :: Sphinx",
+    "License :: OSI Approved :: MIT License"
+    ]
+dependencies = ["sphinx"]
+
+[tool.yapf]
+based_on_style = "google"
+column_limit = 100

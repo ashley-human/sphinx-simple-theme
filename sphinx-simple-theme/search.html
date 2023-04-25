@@ -1,0 +1,19 @@
+{%- extends "layout.html" %}
+
+{% block extrahead %}
+<script src="{{ pathto('searchindex.js', 1) }}" defer></script>
+{{ super() }}
+{% endblock %}
+
+{% block body %}
+
+<noscript>
+  <div class="admonition warning">
+    <p>JavaScript is required for search. Please enable JaveScript.</p>
+  </div>
+</noscript>
+
+<div id="search-results">
+</div>
+
+{% endblock %}
